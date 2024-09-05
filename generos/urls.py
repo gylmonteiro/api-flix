@@ -4,5 +4,6 @@ from . import views
 
 
 urlpatterns = [
-    path("", views.generos_view, name='generos'),
+    path("", views.generos_view, name='cria-lista-generos'),
+    path("<int:pk>", ..., name='detalha-genero'),
 ]

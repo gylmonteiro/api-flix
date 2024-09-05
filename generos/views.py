@@ -17,3 +17,4 @@ def generos_view(request):
         novo_genero.save()
         return JsonResponse({'id': novo_genero.id, 'nome':novo_genero.nome}, status=201)
 
+
