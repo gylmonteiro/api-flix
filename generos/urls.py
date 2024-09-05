@@ -4,5 +4,5 @@ from . import views
 
 
 urlpatterns = [
-    path("", views.generos_view, name='lista-generos'),
+    path("", views.generos_view, name='generos'),
 ]
