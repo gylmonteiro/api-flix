@@ -19,11 +19,25 @@ def generos_view(request):
         return JsonResponse({'id': novo_genero.id, 'nome':novo_genero.nome}, status=201)
 
 @csrf_exempt
-def detalhar_genero_view(request, pk):
-	genero = get_object_or_404(Genero,pk=pk)
-	dados = {'id':genero.id, 'nome': genero.nome}
-	return JsonResponse(dados)
+def view_detalhar__atualizar_genero(request, pk):
+    genero = get_object_or_404(Genero,pk=pk)
 
+    if request.method == 'GET':
+        dados = {'id':genero.id, 'nome': genero.nome}
+        return JsonResponse(dados)
+    
+    elif request.method == 'PUT':
+        dados  = json.loads(request.body.decode('utf-8'))['nome']
+        genero.nome = dados
+        genero.save()
+        return JsonResponse({'id': genero.id, 'nome': genero.nome})
+    
+    elif request.method == 'DELETE':
+        genero.delete()
+        return JsonResponse({'message': 'Objeto deletado com sucesso'})
+
+
+#Não estamos utilizando essa view, porque implementamos tudo na view acima
 @csrf_exempt
 def atualizar_genero_view(request,pk):
      genero = get_object_or_404(Genero, pk=pk)
