@@ -18,8 +18,16 @@ def generos_view(request):
         novo_genero.save()
         return JsonResponse({'id': novo_genero.id, 'nome':novo_genero.nome}, status=201)
 
-
+@csrf_exempt
 def detalhar_genero_view(request, pk):
 	genero = get_object_or_404(Genero,pk=pk)
 	dados = {'id':genero.id, 'nome': genero.nome}
 	return JsonResponse(dados)
+
+@csrf_exempt
+def atualizar_genero_view(request,pk):
+     genero = get_object_or_404(Genero, pk=pk)
+     dados = json.loads(request.body.decode('utf-8'))['nome']
+     genero.nome = dados
+     genero.save()
+     return JsonResponse({'id': genero.id, 'nome': genero.nome})
