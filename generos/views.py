@@ -2,6 +2,7 @@
 import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import get_object_or_404
 from .models import Genero
 # Create your views here.
 
@@ -18,3 +19,7 @@ def generos_view(request):
         return JsonResponse({'id': novo_genero.id, 'nome':novo_genero.nome}, status=201)
 
 
+def detalhar_genero_view(request, pk):
+	genero = get_object_or_404(Genero,pk=pk)
+	dados = {'id':genero.id, 'nome': genero.nome}
+	return JsonResponse(dados)
