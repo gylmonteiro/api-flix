@@ -4,7 +4,14 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
 from .models import Genero
+from rest_framework import generics
+from .serializers import GeneroListCreateSerializer
 # Create your views here.
+
+class GeneroCreateListView(generics.ListCreateAPIView):
+    queryset = Genero.objects.all()
+    serializer_class = GeneroListCreateSerializer
+    
 
 @csrf_exempt
 def generos_view(request):
