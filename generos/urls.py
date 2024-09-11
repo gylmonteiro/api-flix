@@ -4,5 +4,5 @@ from . import views
 
 urlpatterns = [
     path("", views.GeneroCreateListView.as_view(), name="cria-lista-generos"),
-    path("<int:pk>/", views.view_detalhar__atualizar_genero, name="detalha-atualiza-genero"),
+    path("<int:pk>/", views.GeneroDetalhaAtualizaDeletaView.as_view(), name="detalha-atualiza-genero"),
 ]
