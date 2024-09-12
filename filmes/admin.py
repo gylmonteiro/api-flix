@@ -4,5 +4,5 @@ from .models import Filme
 
 @admin.register(Filme)
 class FilmeAdmin(admin.ModelAdmin):
-    list_display = ('titulo', 'data_de_lancamento', 'genero')
+    list_display = ('titulo', 'ano_de_lancamento', 'genero')
     
