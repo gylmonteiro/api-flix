@@ -20,13 +20,14 @@ class FilmeSerializer(serializers.Serializer):
         return filme
 
 
-
+#Serializador com model
 class FilmeModelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Filme
         fields = '__all__'
 
+    #Uma validação de ano de lançamento
     def validate_ano_de_lancamento(self, value):
 
         if value < 2000:
