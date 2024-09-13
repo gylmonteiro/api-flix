@@ -3,9 +3,9 @@ from . import views
 
 
 urlpatterns = [
-    path("", views.AvaliacaoListaCriaView.as_view(), name="lista-cria-avaliacoes"),
+    path("avaliacoes/", views.AvaliacaoListaCriaView.as_view(), name="lista-cria-avaliacoes"),
     path(
-        "<int:pk>/",
+        "avaliacoes/<int:pk>/",
         views.AvaliacaoDetalhaAtualizaDeletaView.as_view(),
         name="detalha-atualiza-deleta-avaliacao",
     ),
