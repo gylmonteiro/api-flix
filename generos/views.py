@@ -3,18 +3,20 @@ import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
-from .models import Genero
 from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
+from .models import Genero
 from .serializers import GeneroSerializer
 # Create your views here.
 
 class GeneroCreateListView(generics.ListCreateAPIView):
+    permission_classes = (IsAuthenticated,)
     queryset = Genero.objects.all()
     serializer_class = GeneroSerializer
-    
 
 
 class GeneroDetalhaAtualizaDeletaView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthenticated,)
     queryset = Genero.objects.all()
     serializer_class = GeneroSerializer
 
@@ -50,7 +52,7 @@ def view_detalhar__atualizar_genero(request, pk):
         return JsonResponse({'message': 'Objeto deletado com sucesso'})
 
 
-#Não estamos utilizando essa view, porque implementamos tudo na view acima
+# Não estamos utilizando essa view, porque implementamos tudo na view acima
 @csrf_exempt
 def atualizar_genero_view(request,pk):
      genero = get_object_or_404(Genero, pk=pk)
