@@ -15,6 +15,6 @@ class FilmeListaCriaView(generics.ListCreateAPIView):
 
 
 class FilmeDetalhaAtualizaDeletaView(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, GlobalPermissionClass)
     queryset = Filme.objects.all()
     serializer_class = FilmeModelSerializer
