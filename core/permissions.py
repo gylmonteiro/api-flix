@@ -2,13 +2,13 @@ from rest_framework import permissions
 
 
 class GlobalPermissionClass(permissions.BasePermission):
+    
     metodo_para_acao = {
         'GET': 'view',
         'POST': 'add',
         'PUT': 'change',
         'PATCH': 'change',
         'DELETE': 'delete',
-
     }
     
     
