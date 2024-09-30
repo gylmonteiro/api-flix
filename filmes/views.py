@@ -1,4 +1,5 @@
-from rest_framework import generics
+from django.db.models import Count
+from rest_framework import generics, views, response, status
 from rest_framework.permissions import IsAuthenticated
 from .models import Filme
 from .serializers import FilmeModelSerializer, FilmeSerializer
@@ -18,3 +19,15 @@ class FilmeDetalhaAtualizaDeletaView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated, GlobalPermissionClass)
     queryset = Filme.objects.all()
     serializer_class = FilmeModelSerializer
+
+
+class FilmesEstatisticasView(views.APIView):
+    permission_classes = (IsAuthenticated, GlobalPermissionClass)
+    queryset = Filme.objects.all()
+
+    def get (self, request):
+        total_filmes = self.queryset.count()
+        filmes_por__genero = self.queryset.values('genero__nome').annotate(count=Count('id'))
+        
+
+        return response.Response({'filmes_por_Genero': filmes_por__genero, 'filmes_na_base_de_dados': total_filmes}, status=status.HTTP_200_OK)
