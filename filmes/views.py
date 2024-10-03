@@ -15,7 +15,7 @@ class FilmeListaCriaView(generics.ListCreateAPIView):
     # serializer_class = FilmeModelSerializer
 
     def get_serializer_class(self):
-        if self.request.method == 'GET':
+        if self.request.method == "GET":
             return FilmeListSerializer
         return FilmeModelSerializer
 
