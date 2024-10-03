@@ -2,7 +2,7 @@ from django.db.models import Count
 from rest_framework import generics, views, response, status
 from rest_framework.permissions import IsAuthenticated
 from .models import Filme
-from .serializers import FilmeModelSerializer, FilmeSerializer
+from .serializers import FilmeModelSerializer, FilmeListSerializer, FilmeSerializer
 from core.permissions import GlobalPermissionClass
 from .permissions import FilmePermissionClass
 
@@ -12,7 +12,12 @@ from .permissions import FilmePermissionClass
 class FilmeListaCriaView(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated, GlobalPermissionClass)
     queryset = Filme.objects.all()
-    serializer_class = FilmeModelSerializer
+    # serializer_class = FilmeModelSerializer
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return FilmeListSerializer
+        return FilmeModelSerializer
 
 
 class FilmeDetalhaAtualizaDeletaView(generics.RetrieveUpdateDestroyAPIView):

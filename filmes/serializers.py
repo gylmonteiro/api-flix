@@ -2,7 +2,9 @@ from django.db.models import Sum, Avg
 from rest_framework import serializers
 from .models import Filme
 from generos.models import Genero
+from generos.serializers import GeneroSerializer
 from atores.models import Ator
+from atores.serializers import AtorSerializer
 
 
 # Criamos este exemplo de um serializer manual. Ofertando maior poder de personalização
@@ -22,14 +24,14 @@ class FilmeSerializer(serializers.Serializer):
         return filme
 
 
-# Serializador com model
-class FilmeModelSerializer(serializers.ModelSerializer):
-
+class FilmeListSerializer(serializers.ModelSerializer):
     media_avaliacao = serializers.SerializerMethodField(read_only=True)
+    genero = GeneroSerializer()
+    atores = AtorSerializer(many=True)
 
     class Meta:
         model = Filme
-        fields = "__all__"
+        fields = ['id', 'titulo', 'media_avaliacao','genero', 'atores', 'ano_de_lancamento', 'resumo']
 
     def get_media_avaliacao(self, instance):
         """
@@ -55,6 +57,18 @@ class FilmeModelSerializer(serializers.ModelSerializer):
             return round(media_avaliacoes, 1)
 
         return None
+
+
+# Serializador com model
+class FilmeModelSerializer(serializers.ModelSerializer):
+
+    
+
+    class Meta:
+        model = Filme
+        fields = "__all__"
+
+    
 
     # Uma validação de ano de lançamento
     def validate_ano_de_lancamento(self, value):
