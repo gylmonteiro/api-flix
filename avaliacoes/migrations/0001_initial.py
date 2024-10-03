@@ -10,17 +10,44 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('filmes', '0001_initial'),
+        ("filmes", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Avaliacao',
+            name="Avaliacao",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('estrelas', models.IntegerField(validators=[django.core.validators.MinValueValidator(0, 'Não pode enviar um valor menor que 0'), django.core.validators.MaxValueValidator(5, 'Não pode enviar um valor maior que 5')])),
-                ('comentario', models.TextField(blank=True, null=True)),
-                ('filme', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='avaliacoes', to='filmes.filme')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "estrelas",
+                    models.IntegerField(
+                        validators=[
+                            django.core.validators.MinValueValidator(
+                                0, "Não pode enviar um valor menor que 0"
+                            ),
+                            django.core.validators.MaxValueValidator(
+                                5, "Não pode enviar um valor maior que 5"
+                            ),
+                        ]
+                    ),
+                ),
+                ("comentario", models.TextField(blank=True, null=True)),
+                (
+                    "filme",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name="avaliacoes",
+                        to="filmes.filme",
+                    ),
+                ),
             ],
         ),
     ]

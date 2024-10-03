@@ -3,7 +3,11 @@ from . import views
 
 
 urlpatterns = [
-    path("avaliacoes/", views.AvaliacaoListaCriaView.as_view(), name="lista-cria-avaliacoes"),
+    path(
+        "avaliacoes/",
+        views.AvaliacaoListaCriaView.as_view(),
+        name="lista-cria-avaliacoes",
+    ),
     path(
         "avaliacoes/<int:pk>/",
         views.AvaliacaoDetalhaAtualizaDeletaView.as_view(),

@@ -4,18 +4,19 @@ from .models import Filme
 from generos.models import Genero
 from atores.models import Ator
 
+
 # Criamos este exemplo de um serializer manual. Ofertando maior poder de personalização
 class FilmeSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     titulo = serializers.CharField()
-    genero = serializers.PrimaryKeyRelatedField(queryset = Genero.objects.all())
+    genero = serializers.PrimaryKeyRelatedField(queryset=Genero.objects.all())
     ano_de_lancamento = serializers.IntegerField()
-    atores = serializers.PrimaryKeyRelatedField(queryset = Ator.objects.all(), many=True)
+    atores = serializers.PrimaryKeyRelatedField(queryset=Ator.objects.all(), many=True)
     resumo = serializers.CharField()
-    
+
     def create(self, validated_data):
-        todos_atores = validated_data.pop('atores')
-    
+        todos_atores = validated_data.pop("atores")
+
         filme = Filme.objects.create(**validated_data)
         filme.atores.set(todos_atores)
         return filme
@@ -24,33 +25,32 @@ class FilmeSerializer(serializers.Serializer):
 # Serializador com model
 class FilmeModelSerializer(serializers.ModelSerializer):
 
-    media_avaliacao = serializers.SerializerMethodField(read_only = True)
+    media_avaliacao = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Filme
-        fields = '__all__'
+        fields = "__all__"
 
     def get_media_avaliacao(self, instance):
-
-        '''
+        """
         # Fazendo a média com base na soma de avaliações e depois dividindo pela quantidade de avaliações
-        
+
         soma_avaliacoes = instance.avaliacoes.aggregate(valor_total=Sum('estrelas'))['valor_total']
         quantidade_avaliacoes = instance.avaliacoes.all().count()
-        '''
+        """
 
-        '''
+        """
         if quantidade_avaliacoes == 0:
-            return "Filme ainda não recebeu avaliações. Seja o primeiro a avaliar"
-        
+            return "Filme ainda não recebeu avaliações. Seja o primeiro a avaliar"        
         elif media_avaliacoes is not None:
             return media_avaliacoes
-        
-        '''
+        """
 
         # FAzendo a média com a função Avg
-        media_avaliacoes = instance.avaliacoes.aggregate(valor_medio=Avg('estrelas'))['valor_medio']
-        
+        media_avaliacoes = instance.avaliacoes.aggregate(valor_medio=Avg("estrelas"))[
+            "valor_medio"
+        ]
+
         if media_avaliacoes:
             return round(media_avaliacoes, 1)
 
@@ -66,5 +66,7 @@ class FilmeModelSerializer(serializers.ModelSerializer):
     # Uma nova validação
     def validate_resumo(self, value):
         if len(value) > 150:
-            raise serializers.ValidationError("Não pode cadastrar com mais de 150 caracteres o resumo")
+            raise serializers.ValidationError(
+                "Não pode cadastrar com mais de 150 caracteres o resumo"
+            )
         return value

@@ -9,20 +9,38 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('atores', '0001_initial'),
-        ('generos', '0001_initial'),
+        ("atores", "0001_initial"),
+        ("generos", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Filme',
+            name="Filme",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('titulo', models.CharField(max_length=100)),
-                ('data_de_lancamento', models.DateField(blank=True, null=True)),
-                ('resumo', models.TextField(blank=True, null=True)),
-                ('atores', models.ManyToManyField(related_name='filmes', to='atores.ator')),
-                ('genero', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='filmes', to='generos.genero')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("titulo", models.CharField(max_length=100)),
+                ("data_de_lancamento", models.DateField(blank=True, null=True)),
+                ("resumo", models.TextField(blank=True, null=True)),
+                (
+                    "atores",
+                    models.ManyToManyField(related_name="filmes", to="atores.ator"),
+                ),
+                (
+                    "genero",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name="filmes",
+                        to="generos.genero",
+                    ),
+                ),
             ],
         ),
     ]

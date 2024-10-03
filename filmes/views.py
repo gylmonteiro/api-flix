@@ -25,9 +25,16 @@ class FilmesEstatisticasView(views.APIView):
     permission_classes = (IsAuthenticated, GlobalPermissionClass)
     queryset = Filme.objects.all()
 
-    def get (self, request):
+    def get(self, request):
         total_filmes = self.queryset.count()
-        filmes_por__genero = self.queryset.values('genero__nome').annotate(count=Count('id'))
-        
+        filmes_por__genero = self.queryset.values("genero__nome").annotate(
+            count=Count("id")
+        )
 
-        return response.Response({'filmes_por_Genero': filmes_por__genero, 'filmes_na_base_de_dados': total_filmes}, status=status.HTTP_200_OK)
+        return response.Response(
+            {
+                "filmes_por_Genero": filmes_por__genero,
+                "filmes_na_base_de_dados": total_filmes,
+            },
+            status=status.HTTP_200_OK,
+        )
